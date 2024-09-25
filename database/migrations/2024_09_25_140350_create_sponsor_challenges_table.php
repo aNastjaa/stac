@@ -12,12 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sponsor_challenges', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->text('brief');
-            $table->foreignId('sponsor_id')->constrained()->onDelete('cascade');
-            $table->date('submission_deadline');
+            $table->string('brand_name');
+            $table->uuid('brand_logo_id')->nullable();
+            $table->timestamp('submission_deadline');
             $table->timestamps();
+
+            $table->foreign('brand_logo_id')->references('id')->on('uploads');
         });
     }
 
